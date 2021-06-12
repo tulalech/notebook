@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Notebook</title>
+</head>
+<body>
+<br>
+<tr>
+    <div>
+        <form th:action="@{/savenotice}" th:field="*{notice}" method="post">
+            <table th:align="left">
+                <tr>
+                    <td><input th:type="hidden" th:field="*{notice.id}" th:maxlength="20" th:max="20" /></td>
+                    <td>Author&nbsp;&nbsp;&nbsp;<input th:type="text" th:field="*{notice.author}" th:maxlength="20" th:max="20" /></td>
+                    <td>Title&nbsp;&nbsp;&nbsp;<input th:type="text" th:field="*{notice.title}" th:maxlength="20"/></td>
+                </tr>
+            </table>
+            <table th:align="left">
+                <tr>
+                    <td>Notice&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td><textarea  rows = "20" cols = "100" th:field = "*{notice.notice}" >... </textarea></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Save notice" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</tr>
+
+<br>
+
+
+<tr>
+    <div th:align="left" >
+        <table width="100%"; th:border="0">
+
+            <tr align="center" th:bgcolor="lightgrey">
+                <th>Id</th>
+                <th>Date</th>
+                <th>Author</th>
+                <th>Title</th>
+                <th>Notice</th>
+                <th>Edit?</th>
+            </tr>
+            <tr th:if="${#lists.isEmpty(notices)}">
+                <td colspan="5">Brak notatek. Dodaj...!</td>
+            </tr>
+
+            <tr th:each="notice, id : ${notices}" th:style="${id.odd}? 'background-color: lightyellow;':'background-color: lightgrey;'" >
+                <td th:align="center" th:text="${notice.id}" th:width="50px"></td>
+                <td th:align="center" th:text="${notice.date}" th:width="150px"></td>
+                <td th:align="left" th:text="${notice.author}" th:width="150px"></td>
+                <td th:align="left" th:text="${notice.title}" th:width="150px"></td>
+                <td th:align="left" th:text="${notice.notice}" th:width="1000px"></td>
+                <td th:align="center"><a th:href="@{'/editnotice/' + ${notice.id}}" th:width="100px">Edit</a></td>
+            </tr>
+        </table>
+    </div>
+</tr>
+<br/>
+</body>
+</html>
